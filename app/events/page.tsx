@@ -1,5 +1,4 @@
 import getSession from "../lib/getSession";
-import { redirect } from "next/navigation";
 import Eventswrapper from "@/components/Eventswrapper";
 
 const EventsPage = async () => {
