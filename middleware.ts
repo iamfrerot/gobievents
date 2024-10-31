@@ -1,12 +1,22 @@
-import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+function parseCookies(request: NextRequest) {
+ const cookieHeader = request.headers.get("cookie") || "";
+ const cookies = Object.fromEntries(
+  cookieHeader.split("; ").map((cookie) => {
+   const [name, ...rest] = cookie.split("=");
+   return [name, decodeURIComponent(rest.join("="))];
+  })
+ );
+ return cookies;
+}
+
 export async function middleware(request: NextRequest) {
- const token = await getToken({
-  req: request,
-  secret: process.env.NEXTAUTH_SECRET,
- });
+ const cookies = parseCookies(request);
+ const token =
+  cookies["next-auth.session-token"] ||
+  cookies["__Secure-next-auth.session-token"];
 
  const PUBLIC_PATHS = ["/login", "/register", "/events", "/"];
  const isPublicPath = PUBLIC_PATHS.includes(request.nextUrl.pathname);
