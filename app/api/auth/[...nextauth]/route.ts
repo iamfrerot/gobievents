@@ -1,10 +1,9 @@
-// app/api/auth/[...nextauth]/route.ts
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import connectDB from "@/app/lib/mongoDb";
 import User, { IUser } from "@/app/models/User";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
  session: {
   strategy: "jwt",
  },

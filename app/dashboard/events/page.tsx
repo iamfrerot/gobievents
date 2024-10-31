@@ -1,8 +1,8 @@
-import getSession from "@/app/lib/getSession";
+import { getServerSession } from "next-auth";
 import Eventswrapper from "@/components/Eventswrapper";
 
 const EventsPage = async () => {
- const session = await getSession();
+ const session = await getServerSession();
  return <Eventswrapper user={session?.user as { role: string; id: string }} />;
 };
 

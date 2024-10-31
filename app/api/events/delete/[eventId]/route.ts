@@ -1,14 +1,14 @@
 import Event from "@/app/models/Event";
 import connectDB from "@/app/lib/mongoDb";
-import { NextResponse } from "next/server";
-import getSession from "@/app/lib/getSession";
-import { Params } from "next/dist/server/request/params";
+import { NextRequest } from "next/server";
+import { getServerSession } from "next-auth";
 
-export async function DELETE(
- req: NextResponse,
- { params }: { params: Params }
-) {
- const session = await getSession();
+type Params = Promise<{
+ eventId: string;
+}>;
+
+export async function DELETE(req: NextRequest, { params }: { params: Params }) {
+ const session = await getServerSession();
  const { eventId } = await params;
  if (!session || session.user.role !== "admin") {
   return new Response(JSON.stringify({ message: "Unauthorized" }), {
