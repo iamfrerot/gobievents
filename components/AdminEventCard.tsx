@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-
+import { useState } from "react";
 interface AdminEventCardProps {
  id: string;
  title: string;
@@ -20,13 +20,14 @@ const AdminEventCard: React.FC<AdminEventCardProps> = ({
  reFetch,
 }) => {
  const newDate = new Date(date).toDateString();
-
+ const [deleteStatus, SetDeleteStatus] = useState(false);
  const handleDelete = async () => {
   const confirmDelete = confirm("Are you Sure want To Delete this Event");
   if (!confirmDelete) {
    return;
   }
   try {
+   SetDeleteStatus(true);
    const response = await fetch(`/api/events/delete/${id}`, {
     method: "DELETE",
     headers: {
@@ -45,6 +46,8 @@ const AdminEventCard: React.FC<AdminEventCardProps> = ({
   } catch (error) {
    console.error("Deleting error:", error);
    alert("An error occurred. Please try again.");
+  } finally {
+   SetDeleteStatus(false);
   }
  };
 
@@ -65,8 +68,12 @@ const AdminEventCard: React.FC<AdminEventCardProps> = ({
     <p>{newDate}</p>
    </div>
    <div className='flex justify-around items-center'>
-    <button onClick={handleDelete} className='bg-red-500 text-white py-1 px-3 '>
-     Delete
+    <button
+     onClick={handleDelete}
+     className='bg-red-500 text-white py-1 px-3'
+     disabled={deleteStatus}
+    >
+     {deleteStatus ? "Deleting..." : "Delete"}
     </button>
     <Link
      href={`/dashboard/events/edit/${id}`}

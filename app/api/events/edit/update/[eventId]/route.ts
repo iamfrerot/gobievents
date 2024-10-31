@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/app/lib/mongoDb";
 import Event from "@/app/models/Event";
-import { getSession } from "next-auth/react";
+import { authOptions } from "@/app/lib/auth";
+import { getServerSession } from "next-auth";
 type Params = Promise<{
  eventId: string;
 }>;
 export async function PUT(request: Request, { params }: { params: Params }) {
  const { eventId } = await params;
  const { title, description, date, availableSeats } = await request.json();
- const session = await getSession();
+ const session = await getServerSession(authOptions);
 
  if (!session) {
   return NextResponse.json(

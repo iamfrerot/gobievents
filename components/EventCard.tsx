@@ -25,13 +25,17 @@ const EventCard: React.FC<EventCardProps> = ({
  const [seats, setSeats] = useState<number>(availableSeats);
  const newDate = new Date(date).toDateString();
  const [booked, setBooked] = useState(bookings.includes(userId));
+ const [bookingStatus, SetBookingStatus] = useState(
+  booked ? "Booked" : "Book Your Seat"
+ );
+
  const handleBooking = async () => {
   const session = await getSession();
   if (!session) {
    alert("Please log in to book an event.");
    return;
   }
-
+  SetBookingStatus("Booking...");
   try {
    const response = await fetch(`/api/events/book/${id}`, {
     method: "POST",
@@ -44,10 +48,13 @@ const EventCard: React.FC<EventCardProps> = ({
 
    if (response.ok) {
     setSeats(data.availableSeats);
-    alert("Booking successful!");
     setBooked(true);
+    SetBookingStatus("Booked");
    } else {
     alert(data.message);
+    if (data.message === "You have already booked this event.") {
+     SetBookingStatus("Booked");
+    }
    }
   } catch (error) {
    console.error("Booking error:", error);
@@ -77,7 +84,7 @@ const EventCard: React.FC<EventCardProps> = ({
      booked ? "bg-green-600" : "bg-third"
     }`}
    >
-    {booked ? "Booked" : "Book Your Seat"}
+    {bookingStatus}
    </button>
   </div>
  );

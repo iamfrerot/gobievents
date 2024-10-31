@@ -21,10 +21,6 @@ export async function middleware(request: NextRequest) {
  const PUBLIC_PATHS = ["/login", "/register", "/events", "/"];
  const isPublicPath = PUBLIC_PATHS.includes(request.nextUrl.pathname);
 
- console.log("Token:", token);
- console.log("Requested Path:", request.nextUrl.pathname);
- console.log("Is Public Path:", isPublicPath);
-
  if (token && isPublicPath) {
   console.log("Authenticated user redirected to /dashboard");
   return NextResponse.redirect(new URL("/dashboard", request.url));
