@@ -48,7 +48,7 @@ const EditEventPage = () => {
   setLoading(true);
 
   try {
-   const response = await fetch(`/api/events/edit/${params.id}`, {
+   const response = await fetch(`/api/events/edit/update/${params.id}`, {
     method: "PUT",
     headers: {
      "Content-Type": "application/json",

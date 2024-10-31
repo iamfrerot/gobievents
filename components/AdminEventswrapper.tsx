@@ -11,6 +11,7 @@ const AdminEventswrapper = ({ userId }: { userId: string }) => {
  const fetchEvents = async () => {
   try {
    const response = await fetch(`/api/events/${userId}`);
+
    const data = await response.json();
    if (!response.ok) {
     throw new Error(data.message);

@@ -2,13 +2,14 @@ import { NextRequest } from "next/server";
 import connectDB from "@/app/lib/mongoDb";
 import Event from "@/app/models/Event";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/auth";
 
 type Params = Promise<{
  eventId: string;
 }>;
 
 export async function GET(req: NextRequest, { params }: { params: Params }) {
- const session = await getServerSession();
+ const session = await getServerSession(authOptions);
  if (!session || session.user.role !== "admin") {
   return new Response(JSON.stringify({ message: "Unauthorized" }), {
    status: 401,

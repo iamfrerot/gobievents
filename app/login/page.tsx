@@ -23,8 +23,6 @@ const Login = () => {
     email,
     password,
    });
-   console.log(result);
-
    if (!result?.ok) {
     throw new Error(result?.error || "Something went wrong");
    }

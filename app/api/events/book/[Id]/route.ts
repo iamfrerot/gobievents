@@ -2,13 +2,14 @@ import Event from "@/app/models/Event";
 import connectDB from "@/app/lib/mongoDb";
 import { NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/auth";
 
 type Params = Promise<{
  Id: string;
 }>;
 
 export async function POST(req: NextRequest, { params }: { params: Params }) {
- const session = await getServerSession();
+ const session = await getServerSession(authOptions);
 
  if (!session) {
   return new Response(

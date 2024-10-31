@@ -3,6 +3,7 @@ import { z } from "zod";
 import connectDB from "@/app/lib/mongoDb";
 import Event from "@/app/models/Event";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/auth";
 
 const eventSchema = z.object({
  title: z.string().min(1, "Title is required"),
@@ -16,7 +17,7 @@ const eventSchema = z.object({
 
 export async function POST(req: NextRequest) {
  try {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   if (!session || session.user.role !== "admin") {
    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
