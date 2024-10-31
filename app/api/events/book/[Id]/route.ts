@@ -28,7 +28,7 @@ export async function POST(
    });
   }
 
-  let userId: string = session.user.id;
+  const userId: string = session.user.id;
   if (event.bookings.includes(userId)) {
    return new Response(
     JSON.stringify({ message: "You have already booked this event." }),

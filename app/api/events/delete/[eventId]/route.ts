@@ -33,7 +33,7 @@ export async function DELETE(
     { status: 404, statusText: "Not Found" }
    );
   }
-  const deletedEvent = await Event.findByIdAndDelete(eventId);
+  await Event.findByIdAndDelete(eventId);
 
   return new Response(JSON.stringify({ message: "Deleted Successful" }), {
    status: 202,

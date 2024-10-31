@@ -18,7 +18,7 @@ const AdminEventswrapper = ({ userId }: { userId: string }) => {
    setEvents(data);
   } catch (error: any) {
    console.error("Error fetching events:", error);
-   setError(error.message);
+   setError(error?.message as string);
   } finally {
    setLoading(false);
   }

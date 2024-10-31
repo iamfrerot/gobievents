@@ -8,7 +8,7 @@ interface AdminEventCardProps {
  date: string;
  availableSeats: number;
  bookings: string[];
- reFetch: Function;
+ reFetch: () => Promise<void>;
 }
 
 const AdminEventCard: React.FC<AdminEventCardProps> = ({
