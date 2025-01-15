@@ -1,5 +1,3 @@
----
-
 # Gobievents
 
 Simple event management created with Next.js.
@@ -40,6 +38,3 @@ Simple event management created with Next.js.
 
 Contributions are welcome! Please open an issue or submit a pull request.
 
----
-
-Let me know if you need any specific details or additional sections.
